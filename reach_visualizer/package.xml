@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>reach_visualizer</name>
+  <version>0.0.0</version>
+  <description>The reach_visualizer package</description>
+
+  <maintainer email="mripperger@swri.org">mripperger</maintainer>
+   <author email="mripperger@swri.org">mripperger</author>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>colorized_mesh_display</depend>
+  <depend>reach_core</depend>
+  <depend>reach_msgs</depend>
+  <depend>pcl_ros</depend>
+  <depend>tf</depend>
+  <depend>tf_conversions</depend>
+  <depend>rbf_interpolation</depend>
+
+</package>
