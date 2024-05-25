@@ -43,6 +43,7 @@ std::string resolveURI(const std::string filename);
 /**
  * @brief Creates a 6-DOF pose from an origin and normal vector, aligning the pose x-axis as closely as possible with
  * the unit x-axis
+ * @param norm Point normal, not necessarily unit length
  */
 Eigen::Isometry3d createFrame(const Eigen::Vector3f& pt, const Eigen::Vector3f& norm);
 

@@ -137,8 +137,11 @@ std::string resolveURI(std::string filename)
   return filename;
 }
 
-Eigen::Isometry3d createFrame(const Eigen::Vector3f& pt, const Eigen::Vector3f& norm)
+Eigen::Isometry3d createFrame(const Eigen::Vector3f& pt, const Eigen::Vector3f& norm_raw)
 {
+  // Normalize the input normal
+  Eigen::Vector3f norm = norm_raw.normalized();
+
   // Initialize coordinate frame and set XYZ location
   Eigen::Isometry3f p = Eigen::Isometry3f::Identity();
   p.matrix()(0, 3) = pt(0);
