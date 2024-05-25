@@ -108,16 +108,14 @@ void ReachStudy::run()
 #pragma omp parallel for num_threads(params_.max_threads)
   for (std::size_t i = 0; i < target_poses_.size(); ++i)
   {
-    const Eigen::Isometry3d& tgt_frame = target_poses_[i] * Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX());
-
     // Solve IK
     try
     {
       std::vector<double> solution;
       double score;
-      std::tie(solution, score) = evaluateIK(tgt_frame, params_.seed_state, ik_solver_, evaluator_);
+      std::tie(solution, score) = evaluateIK(target_poses_[i], params_.seed_state, ik_solver_, evaluator_);
 
-      ReachRecord msg(true, tgt_frame, params_.seed_state, zip(ik_solver_->getJointNames(), solution), score);
+      ReachRecord msg(true, target_poses_[i], params_.seed_state, zip(ik_solver_->getJointNames(), solution), score);
       {
         std::lock_guard<std::mutex> lock{ mutex_ };
         active_result->operator[](i) = msg;
@@ -125,7 +123,7 @@ void ReachStudy::run()
     }
     catch (const std::exception&)
     {
-      ReachRecord msg(false, tgt_frame, params_.seed_state, params_.seed_state, 0.0);
+      ReachRecord msg(false, target_poses_[i], params_.seed_state, params_.seed_state, 0.0);
       {
         std::lock_guard<std::mutex> lock{ mutex_ };
         active_result->operator[](i) = msg;
